@@ -1,5 +1,7 @@
 package com.company;
 
+// Task 2
+
 public class BlackjackHand extends Hand {
     public BlackjackHand(int maxCards) {
         super(maxCards);
@@ -7,7 +9,7 @@ public class BlackjackHand extends Hand {
     public int getValue() {
         int value = 0;
         for (int i = 0; i < getNumCards(); i++) {
-            var x = getCard(i);
+            Card x = getCard(i);
             if(x.isAce())
             {
                 if(value > 10) {

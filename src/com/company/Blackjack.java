@@ -6,7 +6,7 @@ package com.company;
          * Computer Science 111, Boston University
          * modified by: Laura K. Gross, laura.gross@bridgew.edu, November 14, 2018
          *
-         * Updated by: Emily O'Brien
+         * Updated by: Emily O'Brien and Zhandali Fontes
          *          date: November 22, 2018
          */
 
@@ -22,8 +22,8 @@ public class Blackjack {
         Deck deck = new Deck(); // Define a Deck object called deck.
         deck.shuffle(); // Shuffle it, using the shuffle method from the deck class.
 
-        RecklessPlayer dealer = new RecklessPlayer(); // Define a dealer.
-        RecklessPlayer player = new RecklessPlayer(); // Define a console player.
+        BlackjackDealer dealer = new BlackjackDealer(); // Define a dealer.
+        ConsolePlayer player = new ConsolePlayer(console); // Define a console player.
 
         /* Declare a string called choice, which will be defined by user input
          * starting with y or not.
@@ -70,7 +70,7 @@ public class Blackjack {
         // Initialize hands: arrays that can hold up to 20 cards.
         // Initially the hands contain no cards.
         BlackjackHand playerHand = new BlackjackHand(20);
-        BlackjackHand dealerHand = new BlackjackHand(20);
+        BlackjackDealerHand dealerHand = new BlackjackDealerHand(20);
 
         // Deal the initial cards: two to the player, and two to the dealer.
         dealCard(deck, playerHand);
@@ -97,7 +97,7 @@ public class Blackjack {
         }
 
         // Next it's the dealer's turn.
-        // dealerHand.setDealerTurn(true); // You will need to uncomment this command when you have written
+        dealerHand.setDealerTurn(true); // You will need to uncomment this command when you have written
         // the method setDealerTurn in the appropriate class.
         displayHands(dealerHand, playerHand); // The dealer reveals her hidden card.
 
@@ -120,7 +120,31 @@ public class Blackjack {
     private static void printResult(BlackjackHand playerHand, BlackjackHand dealerHand) {
         int playerScore = playerHand.getValue();
         int dealerScore = dealerHand.getValue();
-        System.out.println("You win or lose!");
+        // Task 5
+        // You Got BlackJack
+        if(playerHand.getValue() == 21 && playerHand.getNumCards() == 2){
+            System.out.println("You got BlackJack! You Win!");
+        }
+        // Dealer Got BlackJack
+        else if(dealerHand.getValue() == 21 && dealerHand.getNumCards() == 2){
+            System.out.println("Dealer got BlackJack! You Lose!");
+        }
+        // You went over 21
+        else if(playerScore > 21){
+            System.out.println("You Lose");
+        }
+        // Dealer went over 21
+        else if(dealerScore > 21){
+            System.out.println("You Win");
+        }
+        // Your score was less than the dealers
+        else if(playerScore < dealerScore){
+            System.out.println("You Lose!");
+        }
+        // Tie goes to you or your score is greater than the dealer
+        else if(playerScore == dealerScore || playerScore > dealerScore){
+            System.out.println("You Win!");
+        }
     }
 
     /* The displayHands method prints the contents of each player's hand and the corresponding
